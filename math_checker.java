@@ -6,22 +6,16 @@ import java.io.*;
 
 class math_checker {
     public static void main(String[] args){
-        boolean skip = false;
 
         Scanner reader = new Scanner(System.in);
 
         String[][] studentData = students(reader);
 
-        questions(reader);
-        if (questions(reader) == null){
-            skip = true;
-        }
+        String[][] answerData = questionsAndAnswers(reader);
+
 
         String[][] responseData = responses(reader);
 
-        if (skip == true){
-            String[][] answerData = answers(reader);
-        }
 
 
         System.out.println("Enter the name of your new file (include file type): ");
@@ -80,8 +74,8 @@ class math_checker {
         return marksData;
     }
 
-    public static String[][] answers(Scanner reader) {
-        String answerDataFileName = getAnswerDataFileName(reader);
+    public static String[][] answers(Scanner reader, String answerDataFileName) {
+
         // String answerDataFileName = "answerData1.txt";
         int answerTotalLines = countLines(answerDataFileName);
         System.out.println(answerTotalLines);
@@ -143,16 +137,22 @@ class math_checker {
         printData(studentData);
         return studentData;
     }
-    public static String[] questions(Scanner reader) {
+    public static String[][] questionsAndAnswers(Scanner reader) {
         String questionDataFileName = getQuestionDataFileName(reader);
-        int questionTotalLines = countLines(questionDataFileName);
-        String[] questionData = new String[questionTotalLines];
-        readQuestions(questionDataFileName, questionData);
-        if (questionData[0].contains("A")){
-            return null;
+        if (!isAnswerFile(questionDataFileName)){
+            System.out.println("We made it somewhere");
+            int questionTotalLines = countLines(questionDataFileName);
+            String[] questionData = new String[questionTotalLines];
+            readQuestions(questionDataFileName, questionData);
+            print1DData(questionData);
+            // return questionData;
+            String answerDataFileName = getAnswerDataFileName(reader);
+            return answers(reader, answerDataFileName);
         }
-        print1DData(questionData);
-        return questionData;
+        return answers(reader, questionDataFileName);
+
+
+
     }
     public static String[][] responses(Scanner reader) {
         String responseDataFileName = getResponseDataFileName(reader);
@@ -378,11 +378,47 @@ class math_checker {
      */
     public static String getQuestionDataFileName(Scanner reader){
         // Scanner reader = new Scanner(System.in);
-        System.out.println("Input the name of the file containing the question data (Make sure to include the file extension): ");
+
+        System.out.println("Input the name of the file containing the question data or containing the answer data (Second option will skip the rest of this step. Make sure to include the file extension): ");
         // Reminder to make a checking loop to ensure that they enter a valid file
         String questionFile = reader.nextLine();
+
         // reader.close();
         return(questionFile);
+    }
+    public static boolean isAnswerFile(String filename){
+        BufferedReader br = null;
+        boolean isAnswerFile = false;
+        System.out.println("Running readStudents method:");
+        try {
+            // Put our file reader into the file given to the method upon calling
+            br = new BufferedReader(new FileReader(filename));
+               	//One way of reading the file
+			// System.out.println("Counting the number of lines...");
+			String contentLine = br.readLine();
+			if (contentLine.toLowerCase().startsWith("a")){
+                isAnswerFile = true;
+            }
+            else {
+                isAnswerFile = false;
+            }
+			}
+
+		catch (IOException e){
+	   		e.printStackTrace();
+       	}
+       	finally{
+	   		try {
+	      		if (br != null){
+					br.close();
+				}
+	   		}
+	   		catch (IOException e) {
+				System.out.println("Error in closing the BufferedReader");
+
+	   		}
+		}
+        return isAnswerFile;
     }
     /**
      * Gets the name of the question data file as an input
