@@ -78,7 +78,7 @@ class math_checker {
 
         // String answerDataFileName = "answerData1.txt";
         int answerTotalLines = countLines(answerDataFileName);
-        System.out.println(answerTotalLines);
+        // System.out.println(answerTotalLines);
         String[] lines = new String[answerTotalLines];
         readLines(answerDataFileName, lines);
         String[][] answerData = new String[(answerTotalLines + 1) / 3][];
@@ -91,14 +91,14 @@ class math_checker {
             answerData[i/3][1] = answer;
         }
 
-        printData(answerData);
+        // printData(answerData);
         return answerData;
     }
 
     public static void readLines(String filename, String[] lines){
         BufferedReader br = null;
         int count = 0;
-        System.out.println("Running readQuestions method:");
+        // System.out.println("Running readQuestions method:");
         try {
             // Put our file reader into the file given to the method upon calling
             br = new BufferedReader(new FileReader(filename));
@@ -134,17 +134,17 @@ class math_checker {
         int studentTotalLines = countLines(studentDataFileName);
         String[][] studentData = new String[studentTotalLines][ansLenCount(studentDataFileName)];
         readStudents(studentDataFileName, studentData);
-        printData(studentData);
+        // printData(studentData);
         return studentData;
     }
     public static String[][] questionsAndAnswers(Scanner reader) {
         String questionDataFileName = getQuestionDataFileName(reader);
         if (!isAnswerFile(questionDataFileName)){
-            System.out.println("We made it somewhere");
+            // System.out.println("We made it somewhere");
             int questionTotalLines = countLines(questionDataFileName);
             String[] questionData = new String[questionTotalLines];
             readQuestions(questionDataFileName, questionData);
-            print1DData(questionData);
+            // print1DData(questionData);
             // return questionData;
             String answerDataFileName = getAnswerDataFileName(reader);
             return answers(reader, answerDataFileName);
@@ -159,7 +159,7 @@ class math_checker {
         int responseTotalLines = countLines(responseDataFileName);
         String[][] responseData = new String[responseTotalLines][ansLenCount(responseDataFileName)];
         readResponses(responseDataFileName, responseData);
-        printData(responseData);
+        // printData(responseData);
         return responseData;
     }
     public static int ansLenCount(String filename){
@@ -167,7 +167,7 @@ class math_checker {
         int answerLength = 0;
         System.out.println("Running ansLenCount method:");
         try {
-            System.out.println("Hit the try:");
+            // System.out.println("Hit the try:");
             // Put our file reader into the file given to the method upon calling
             br = new BufferedReader(new FileReader(filename));
                	//One way of reading the file
@@ -201,7 +201,7 @@ class math_checker {
     public static void readResponses(String filename, String[][] responseData){
         BufferedReader br = null;
         int count = 0;
-        System.out.println("Running readResponses method:");
+        // System.out.println("Running readResponses method:");
         try {
             // Put our file reader into the file given to the method upon calling
             br = new BufferedReader(new FileReader(filename));
@@ -211,7 +211,7 @@ class math_checker {
 			while (contentLine != null) {
 
 
-				System.out.println(contentLine + " " + count);
+				// System.out.println(contentLine + " " + count);
                 responseData[count] = contentLine.split(",");
                 contentLine = br.readLine();
                 count++;
@@ -240,7 +240,7 @@ class math_checker {
     public static void readQuestions(String filename, String[] questionData){
         BufferedReader br = null;
         int count = 0;
-        System.out.println("Running readQuestions method:");
+        // System.out.println("Running readQuestions method:");
         try {
             // Put our file reader into the file given to the method upon calling
             br = new BufferedReader(new FileReader(filename));
@@ -249,7 +249,7 @@ class math_checker {
 			String contentLine = br.readLine();
 			while (contentLine != null) {
 
-				System.out.println(contentLine + " " + count);
+				// System.out.println(contentLine + " " + count);
                 questionData[count] = contentLine;
                 contentLine = br.readLine();
 
@@ -331,7 +331,7 @@ class math_checker {
     public static void readStudents(String filename, String[][] studentData){
         BufferedReader br = null;
         int count = 0;
-        System.out.println("Running readStudents method:");
+        // System.out.println("Running readStudents method:");
         try {
             // Put our file reader into the file given to the method upon calling
             br = new BufferedReader(new FileReader(filename));
@@ -340,7 +340,7 @@ class math_checker {
 			String contentLine = br.readLine();
 			while (contentLine != null) {
 
-				System.out.println(contentLine + " " + count);
+				// System.out.println(contentLine + " " + count);
                 studentData[count] = contentLine.split(",");
                 contentLine = br.readLine();
                 count++;
@@ -378,18 +378,16 @@ class math_checker {
      */
     public static String getQuestionDataFileName(Scanner reader){
         // Scanner reader = new Scanner(System.in);
-
         System.out.println("Input the name of the file containing the question data or containing the answer data (Second option will skip the rest of this step. Make sure to include the file extension): ");
         // Reminder to make a checking loop to ensure that they enter a valid file
         String questionFile = reader.nextLine();
-
         // reader.close();
         return(questionFile);
     }
     public static boolean isAnswerFile(String filename){
         BufferedReader br = null;
         boolean isAnswerFile = false;
-        System.out.println("Running readStudents method:");
+        // System.out.println("Running readStudents method:");
         try {
             // Put our file reader into the file given to the method upon calling
             br = new BufferedReader(new FileReader(filename));
